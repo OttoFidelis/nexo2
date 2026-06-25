@@ -1,9 +1,9 @@
 services:
   mysql:
     image: mysql:latest
-    container_name: mysql
+    container_name: nexo-mysql
     environment:
-      MYSQL_DATABASE: eventclean
+      MYSQL_DATABASE: nexo
       MYSQL_ROOT_PASSWORD: ITB@123456
     ports:
       - "3306:3306"
