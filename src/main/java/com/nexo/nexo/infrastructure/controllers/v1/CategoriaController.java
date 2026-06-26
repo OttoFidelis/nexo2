@@ -17,7 +17,7 @@ import java.util.List;
 
 @Tag(name = "Categorias", description = "Endpoints para gerenciar categorias")
 @RestController
-@RequestMapping("api/V1/categorias")
+@RequestMapping("api/v1/categorias")
 public class CategoriaController {
 
     private final CategoriaGateway categoriaGateway;
