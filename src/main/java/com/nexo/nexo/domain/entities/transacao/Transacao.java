@@ -2,6 +2,7 @@ package com.nexo.nexo.domain.entities.transacao;
 
 import java.time.LocalDate;
 
+import com.nexo.nexo.domain.entities.categoria.Categoria;
 import com.nexo.nexo.domain.entities.valueObjects.Descricao;
 
 public class Transacao {
@@ -9,7 +10,7 @@ public class Transacao {
     private Descricao descricao;
     private Valor valor;
     private LocalDate data;
-    private String categoria;
+    private Categoria categoria;
     private Tipo tipo;
 
     public Long getId() {
@@ -36,10 +37,10 @@ public class Transacao {
     public void setData(LocalDate data) {
         this.data = data;
     }
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
     public Tipo getTipo() {
@@ -48,7 +49,7 @@ public class Transacao {
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
-    public Transacao(Long id, Descricao descricao, Valor valor, LocalDate data, String categoria, Tipo tipo) {
+    public Transacao(Long id, Descricao descricao, Valor valor, LocalDate data, Categoria categoria, Tipo tipo) {
         this.id = id;
         this.descricao = descricao;
         this.valor = valor;

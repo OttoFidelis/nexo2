@@ -1,0 +1,358 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+tags:
+- name: Receita
+  description: API para gerenciar receitas
+- name: Despesa
+  description: API para gerenciar despesas
+- name: Categorias
+  description: Endpoints para gerenciar categorias
+paths:
+  /api/v1/receita/save:
+    post:
+      tags:
+      - Receita
+      summary: Criar nova receita
+      description: Cria uma nova receita com base nos dados fornecidos
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReceitaDTO"
+        required: true
+      responses:
+        "200":
+          description: Receita criada com sucesso
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceitaDTO"
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceitaDTO"
+        "400":
+          description: Dados inválidos fornecidos
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceitaDTO"
+  /api/v1/despesa/save:
+    post:
+      tags:
+      - Despesa
+      summary: Criar nova despesa
+      description: Cria uma nova despesa com base nos dados fornecidos
+      operationId: save_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DespesaDTO"
+        required: true
+      responses:
+        "200":
+          description: Despesa criada com sucesso
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DespesaDTO"
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DespesaDTO"
+        "400":
+          description: Dados inválidos fornecidos
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DespesaDTO"
+  /api/V1/categorias/save:
+    post:
+      tags:
+      - Categorias
+      summary: Criar nova categoria
+      description: Cria uma nova categoria com base nos dados fornecidos
+      operationId: save_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoriaDTO"
+        required: true
+      responses:
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoriaDTO"
+        ? "20                                                                    \
+          \                                                                      \
+          \                          0"
+        : description: Categoria criada com sucesso
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoriaDTO"
+        "400":
+          description: Dados inválidos fornecidos
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoriaDTO"
+  /api/v1/receita/findById/{id}:
+    get:
+      tags:
+      - Receita
+      summary: Buscar receita por ID
+      description: Retorna uma receita específica com base no ID fornecido
+      operationId: findById
+      parameters:
+      - name: id
+        in: path
+        description: Id usado para encontrar a Receita
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Receita não encontrada
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceitaDTO"
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceitaDTO"
+        "200":
+          description: Receita encontrada com sucesso
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReceitaDTO"
+  /api/v1/receita/findAll:
+    get:
+      tags:
+      - Receita
+      summary: Listar todas as receitas
+      description: Retorna uma lista de todas as receitas cadastradas
+      operationId: findAll
+      responses:
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReceitaDTO"
+        "200":
+          description: Lista de receitas retornada com sucesso
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReceitaDTO"
+  /api/v1/despesa/findById/{id}:
+    get:
+      tags:
+      - Despesa
+      summary: Buscar despesa por ID
+      description: Retorna uma despesa específica com base no ID fornecido
+      operationId: findById_1
+      parameters:
+      - name: id
+        in: path
+        description: Id usado para encontrar a Despesa
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Despesa não encontrada
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DespesaDTO"
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DespesaDTO"
+        "200":
+          description: Despesa encontrada com sucesso
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DespesaDTO"
+  /api/v1/despesa/findAll:
+    get:
+      tags:
+      - Despesa
+      summary: Listar todas as despesas
+      description: Retorna uma lista de todas as despesas cadastradas
+      operationId: findAll_1
+      responses:
+        "200":
+          description: Lista de despesas retornada com sucesso
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DespesaDTO"
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DespesaDTO"
+  /api/V1/categorias/findById:
+    get:
+      tags:
+      - Categorias
+      summary: Buscar categoria por ID
+      description: Retorna uma categoria específica com base no ID fornecido
+      operationId: findById_2
+      parameters:
+      - name: id
+        in: query
+        description: Id usado para encontrar a Categoria
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Categoria não encontrada
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoriaDTO"
+        "200":
+          description: Categoria encontrada com sucesso
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoriaDTO"
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CategoriaDTO"
+  /api/V1/categorias/findAll:
+    get:
+      tags:
+      - Categorias
+      summary: Listar todas as categorias
+      description: Retorna uma lista de todas as categorias cadastradas
+      operationId: findAll_2
+      responses:
+        "500":
+          description: Erro interno do servidor
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoriaDTO"
+        "200":
+          description: Lista de categorias retornada com sucesso
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoriaDTO"
+components:
+  schemas:
+    CategoriaDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID da categoria
+          format: int64
+          example: 1
+        nome:
+          type: string
+          description: Nome da categoria
+          example: Alimentação
+        descricao:
+          type: string
+          description: Descrição da categoria
+          example: Despesas relacionadas à alimentação
+      description: Dados da Categoria a ser criada
+      example:
+        id: 1
+        nome: Vendas
+        descricao: Receitas relacionadas a vendas de produtos
+    ReceitaDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID da receita
+          format: int64
+          example: 1
+        descricao:
+          type: string
+          description: Descrição da receita
+          example: Venda de produto
+        valor:
+          type: number
+          description: Valor da receita
+          example: 500.0
+        data:
+          type: string
+          description: Data da receita
+          format: date
+          example: 2023-06-15
+        categoria:
+          $ref: "#/components/schemas/CategoriaDTO"
+      description: Objeto ReceitaDTO contendo os dados da receita a ser criada
+    DespesaDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID da despesa
+          format: int64
+          example: 1
+        descricao:
+          type: string
+          description: Descrição da despesa
+          example: Compra de supermercado
+        valor:
+          type: number
+          description: Valor da despesa
+          example: 150.0
+        data:
+          type: string
+          description: Data da despesa
+          format: date
+          example: 2023-06-15
+        categoria:
+          $ref: "#/components/schemas/CategoriaDTO"
+      description: Objeto DespesaDTO contendo os dados da despesa a ser criada
