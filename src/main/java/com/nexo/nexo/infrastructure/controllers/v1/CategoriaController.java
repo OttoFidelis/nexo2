@@ -59,7 +59,8 @@ public class CategoriaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     @PostMapping("save")
-    public ResponseEntity<CategoriaDTO> save(@RequestBody @Parameter(description = "Dados da Categoria a ser criada") CategoriaDTO categoriaDTO){
+    public ResponseEntity<CategoriaDTO> save(@RequestBody
+                                                 @Parameter(description = "Dados da Categoria a ser criada") CategoriaDTO categoriaDTO){
         Categoria categoria = CategoriaMapper.toEntity(categoriaDTO);
         categoria = categoriaGateway.save(categoria);
         return new ResponseEntity<>(CategoriaMapper.toDTO(categoria), HttpStatus.OK);
