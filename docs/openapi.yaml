@@ -77,7 +77,7 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/DespesaDTO"
-  /api/V1/categorias/save:
+  /api/v1/categorias/save:
     post:
       tags:
       - Categorias
@@ -91,16 +91,14 @@ paths:
               $ref: "#/components/schemas/CategoriaDTO"
         required: true
       responses:
-        "500":
-          description: Erro interno do servidor
+        "200":
+          description: Categoria criada com sucesso
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/CategoriaDTO"
-        ? "20                                                                    \
-          \                                                                      \
-          \                          0"
-        : description: Categoria criada com sucesso
+        "500":
+          description: Erro interno do servidor
           content:
             '*/*':
               schema:
@@ -227,7 +225,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/DespesaDTO"
-  /api/V1/categorias/findById:
+  /api/v1/categorias/findById:
     get:
       tags:
       - Categorias
@@ -261,7 +259,7 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/CategoriaDTO"
-  /api/V1/categorias/findAll:
+  /api/v1/categorias/findAll:
     get:
       tags:
       - Categorias
