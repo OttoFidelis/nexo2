@@ -54,7 +54,7 @@ public class CategoriaController {
 
     @Operation(summary = "Criar nova categoria", description = "Cria uma nova categoria com base nos dados fornecidos")
     @ApiResponses({
-            @ApiResponse(responseCode = "20                                                                                                                                                                    0", description = "Categoria criada com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Categoria criada com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
