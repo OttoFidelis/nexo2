@@ -1,6 +1,12 @@
 package com.nexo.nexo.infrastructure.controllers.v1;
 
 import com.nexo.nexo.domain.gateway.TransacaoGateway;
+import com.nexo.nexo.domain.implementations.categoria.CreateCategoria;
+import com.nexo.nexo.domain.implementations.transacao.CreateTransacao;
+import com.nexo.nexo.domain.useCases.transacao.CreateTransacaoUseCase;
+import com.nexo.nexo.domain.useCases.transacao.FindAllTransacaoUseCase;
+import com.nexo.nexo.domain.useCases.transacao.FindByIdTransacaoUseCase;
+import com.nexo.nexo.domain.useCases.usuario.FindAllUsuarioUseCase;
 import com.nexo.nexo.infrastructure.DTOs.ReceitaDTO;
 import com.nexo.nexo.infrastructure.mappers.ReceitaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,10 +26,14 @@ import java.util.List;
 @RequestMapping("api/v1/receita")
 public class ReceitaController {
 
-    private final TransacaoGateway transacaoGateway;
+    private final CreateTransacaoUseCase  createReceitaUseCase;
+    private final FindAllTransacaoUseCase findAllReceitaUseCase;
+    private final FindByIdTransacaoUseCase findByIdReceitaUseCase;
 
     public ReceitaController(@Qualifier("receitaGatewayImpl") TransacaoGateway transacaoGateway) {
-        this.transacaoGateway = transacaoGateway;
+        this.createReceitaUseCase = transacaoGateway::save;
+        this.findAllReceitaUseCase = transacaoGateway::findAll;
+        this.findByIdReceitaUseCase = transacaoGateway::findById;
     }
 
     @Operation(summary = "Buscar receita por ID", description = "Retorna uma receita específica com base no ID fornecido")
@@ -35,7 +45,7 @@ public class ReceitaController {
     })
     @GetMapping("findById/{id}")
     public ResponseEntity<ReceitaDTO> findById(@PathVariable @Parameter(description = "Id usado para encontrar a Receita") Long id) {
-        return new ResponseEntity<>(ReceitaMapper.toDTO(transacaoGateway.findById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(ReceitaMapper.toDTO(findByIdReceitaUseCase.execute(id)), HttpStatus.OK);
     }
 
     @Operation(summary = "Listar todas as receitas", description = "Retorna uma lista de todas as receitas cadastradas")
@@ -45,7 +55,7 @@ public class ReceitaController {
     })
     @GetMapping("findAll")
     public ResponseEntity<List<ReceitaDTO>> findAll() {
-        return new ResponseEntity<>(transacaoGateway.findAll().stream().
+        return new ResponseEntity<>(findAllReceitaUseCase.execute().stream().
                 map(ReceitaMapper::toDTO).
                 toList(), HttpStatus.OK);
     }
@@ -58,6 +68,6 @@ public class ReceitaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     public ResponseEntity<ReceitaDTO> save(@RequestBody @Parameter(description = "Objeto ReceitaDTO contendo os dados da receita a ser criada") ReceitaDTO receitaDTO) {
-        return new ResponseEntity<>(ReceitaMapper.toDTO(transacaoGateway.save(ReceitaMapper.toEntity(receitaDTO))), HttpStatus.OK);
+        return new ResponseEntity<>(ReceitaMapper.toDTO(createReceitaUseCase.execute(ReceitaMapper.toEntity(receitaDTO))), HttpStatus.OK);
     }
 }

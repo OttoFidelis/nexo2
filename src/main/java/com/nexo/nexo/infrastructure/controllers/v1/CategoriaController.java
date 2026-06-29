@@ -2,6 +2,12 @@ package com.nexo.nexo.infrastructure.controllers.v1;
 
 import com.nexo.nexo.domain.entities.categoria.Categoria;
 import com.nexo.nexo.domain.gateway.CategoriaGateway;
+import com.nexo.nexo.domain.implementations.categoria.CreateCategoria;
+import com.nexo.nexo.domain.useCases.categoria.CreateCategoriaUseCase;
+import com.nexo.nexo.domain.useCases.categoria.FindAllCategoriaUseCase;
+import com.nexo.nexo.domain.useCases.categoria.FindByIdCategoriaUseCase;
+import com.nexo.nexo.domain.useCases.usuario.FindAllUsuarioUseCase;
+import com.nexo.nexo.domain.useCases.usuario.FindByIdUsuarioUseCase;
 import com.nexo.nexo.infrastructure.DTOs.CategoriaDTO;
 import com.nexo.nexo.infrastructure.mappers.CategoriaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +15,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +27,16 @@ import java.util.List;
 @RequestMapping("api/v1/categorias")
 public class CategoriaController {
 
-    private final CategoriaGateway categoriaGateway;
+    private final CreateCategoriaUseCase createCategoriaUseCase;
+    private final FindAllCategoriaUseCase findAllCategoriaUseCase;
+    private final FindByIdCategoriaUseCase findByIdCategoriaUseCase;
 
     public CategoriaController(CategoriaGateway categoriaGateway) {
-        this.categoriaGateway = categoriaGateway;
+        this.createCategoriaUseCase = categoriaGateway::save;
+        this.findAllCategoriaUseCase = categoriaGateway::findAll;
+        this.findByIdCategoriaUseCase = categoriaGateway::findById;
     }
+
 
     @Operation(summary = "Listar todas as categorias", description = "Retorna uma lista de todas as categorias cadastradas")
     @ApiResponses({
@@ -34,7 +46,7 @@ public class CategoriaController {
     })
     @GetMapping("findAll")
     public ResponseEntity<List<CategoriaDTO>> findAll(){
-        return new ResponseEntity<>(categoriaGateway.findAll().stream()
+        return new ResponseEntity<>(findAllCategoriaUseCase.execute().stream()
                 .map(CategoriaMapper::toDTO)
                 .toList(),  HttpStatus.OK);
 
@@ -48,7 +60,7 @@ public class CategoriaController {
     })
     @GetMapping("findById")
     public ResponseEntity<CategoriaDTO> findById(@RequestParam @Parameter(description = "Id usado para encontrar a Categoria") Long id){
-        Categoria categoria = categoriaGateway.findById(id);
+        Categoria categoria = findByIdCategoriaUseCase.execute(id);
         return new ResponseEntity<>(CategoriaMapper.toDTO(categoria), HttpStatus.OK);
     }
 
@@ -62,7 +74,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaDTO> save(@RequestBody
                                                  @Parameter(description = "Dados da Categoria a ser criada") CategoriaDTO categoriaDTO){
         Categoria categoria = CategoriaMapper.toEntity(categoriaDTO);
-        categoria = categoriaGateway.save(categoria);
+        categoria = createCategoriaUseCase.execute(categoria);
         return new ResponseEntity<>(CategoriaMapper.toDTO(categoria), HttpStatus.OK);
     }
 }

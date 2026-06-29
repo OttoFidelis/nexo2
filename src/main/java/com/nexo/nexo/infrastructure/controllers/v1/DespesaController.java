@@ -1,6 +1,10 @@
 package com.nexo.nexo.infrastructure.controllers.v1;
 
 import com.nexo.nexo.domain.gateway.TransacaoGateway;
+import com.nexo.nexo.domain.implementations.transacao.CreateTransacao;
+import com.nexo.nexo.domain.useCases.transacao.CreateTransacaoUseCase;
+import com.nexo.nexo.domain.useCases.transacao.FindAllTransacaoUseCase;
+import com.nexo.nexo.domain.useCases.transacao.FindByIdTransacaoUseCase;
 import com.nexo.nexo.infrastructure.DTOs.DespesaDTO;
 import com.nexo.nexo.infrastructure.mappers.DespesaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,10 +24,14 @@ import java.util.List;
 @RequestMapping("api/v1/despesa")
 public class DespesaController {
 
-    private final TransacaoGateway transacaoGateway;
+    private final CreateTransacaoUseCase createDespesaUseCase;
+    private final FindAllTransacaoUseCase findAllDespesaUseCase;
+    private final FindByIdTransacaoUseCase findByIdDespesaUseCase;
 
     public DespesaController(@Qualifier("despesaGatewayImpl") TransacaoGateway transacaoGateway) {
-        this.transacaoGateway = transacaoGateway;
+        this.createDespesaUseCase = transacaoGateway::save;
+        this.findAllDespesaUseCase = transacaoGateway::findAll;
+        this.findByIdDespesaUseCase = transacaoGateway::findById;
     }
 
     @Operation(summary = "Buscar despesa por ID", description = "Retorna uma despesa específica com base no ID fornecido")
@@ -35,7 +43,7 @@ public class DespesaController {
     })
     @GetMapping("findById/{id}")
     public ResponseEntity<DespesaDTO> findById(@PathVariable @Parameter(description = "Id usado para encontrar a Despesa") Long id) {
-        return new ResponseEntity<>(DespesaMapper.toDTO(transacaoGateway.findById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(DespesaMapper.toDTO(findByIdDespesaUseCase.execute(id)), HttpStatus.OK);
     }
 
     @Operation(summary = "Listar todas as despesas", description = "Retorna uma lista de todas as despesas cadastradas")
@@ -45,7 +53,7 @@ public class DespesaController {
     })
     @GetMapping("findAll")
     public ResponseEntity<List<DespesaDTO>> findAll() {
-        return new ResponseEntity<>(transacaoGateway.findAll().stream().
+        return new ResponseEntity<>(findAllDespesaUseCase.execute().stream().
                 map(DespesaMapper::toDTO).
                 toList(), HttpStatus.OK);
     }
@@ -58,6 +66,6 @@ public class DespesaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     public ResponseEntity<DespesaDTO> save(@RequestBody @Parameter(description = "Objeto DespesaDTO contendo os dados da despesa a ser criada") DespesaDTO despesaDTO) {
-        return new ResponseEntity<>(DespesaMapper.toDTO(transacaoGateway.save(DespesaMapper.toEntity(despesaDTO))), HttpStatus.OK);
+        return new ResponseEntity<>(DespesaMapper.toDTO(createDespesaUseCase.execute(DespesaMapper.toEntity(despesaDTO))), HttpStatus.OK);
     }
 }
