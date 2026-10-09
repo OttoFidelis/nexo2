@@ -4,7 +4,6 @@ import com.nexo.nexo.domain.entities.transacao.Tipo;
 import com.nexo.nexo.domain.entities.transacao.Transacao;
 import com.nexo.nexo.domain.entities.transacao.Valor;
 import com.nexo.nexo.domain.entities.valueObjects.Descricao;
-import com.nexo.nexo.infrastructure.DTOs.CategoriaDTO;
 import com.nexo.nexo.infrastructure.DTOs.ReceitaDTO;
 import com.nexo.nexo.infrastructure.persistences.ReceitaPersistence;
 

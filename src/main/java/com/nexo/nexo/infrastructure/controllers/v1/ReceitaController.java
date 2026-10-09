@@ -1,12 +1,9 @@
 package com.nexo.nexo.infrastructure.controllers.v1;
 
 import com.nexo.nexo.domain.gateway.TransacaoGateway;
-import com.nexo.nexo.domain.implementations.categoria.CreateCategoria;
-import com.nexo.nexo.domain.implementations.transacao.CreateTransacao;
 import com.nexo.nexo.domain.useCases.transacao.CreateTransacaoUseCase;
 import com.nexo.nexo.domain.useCases.transacao.FindAllTransacaoUseCase;
 import com.nexo.nexo.domain.useCases.transacao.FindByIdTransacaoUseCase;
-import com.nexo.nexo.domain.useCases.usuario.FindAllUsuarioUseCase;
 import com.nexo.nexo.infrastructure.DTOs.ReceitaDTO;
 import com.nexo.nexo.infrastructure.mappers.ReceitaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Receita", description = "API para gerenciar receitas")
+@Tag(name = "Receita V1", description = "API para gerenciar receitas")
 @RestController
 @RequestMapping("api/v1/receita")
 public class ReceitaController {

@@ -1,7 +1,6 @@
 package com.nexo.nexo.infrastructure.controllers.v1;
 
 import com.nexo.nexo.domain.gateway.TransacaoGateway;
-import com.nexo.nexo.domain.implementations.transacao.CreateTransacao;
 import com.nexo.nexo.domain.useCases.transacao.CreateTransacaoUseCase;
 import com.nexo.nexo.domain.useCases.transacao.FindAllTransacaoUseCase;
 import com.nexo.nexo.domain.useCases.transacao.FindByIdTransacaoUseCase;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Despesa", description = "API para gerenciar despesas")
+@Tag(name = "Despesa V1", description = "API para gerenciar despesas")
 @RestController
 @RequestMapping("api/v1/despesa")
 public class DespesaController {

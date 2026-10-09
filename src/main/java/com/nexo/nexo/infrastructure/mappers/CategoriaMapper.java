@@ -11,7 +11,8 @@ public class CategoriaMapper {
         return new Categoria(
                 persistence.getId(),
                 new Nome(persistence.getNome()),
-                new Descricao(persistence.getDescricao())
+                new Descricao(persistence.getDescricao()),
+                UsuarioMapper.toEntity(persistence.getUsuario())
         );
     }
 
@@ -19,7 +20,8 @@ public class CategoriaMapper {
         return new Categoria(
                 dto.id(),
                 new Nome(dto.nome()),
-                new Descricao(dto.descricao())
+                new Descricao(dto.descricao()),
+                UsuarioMapper.toEntity(dto.usuario())
         );
     }
 
@@ -27,7 +29,8 @@ public class CategoriaMapper {
         return new CategoriaPersistence(
                 categoria.getId(),
                 categoria.getNome().value(),
-                categoria.getDescricao().value()
+                categoria.getDescricao().value(),
+                UsuarioMapper.toPersistence(categoria.getUsuario())
         );
     }
 
@@ -35,7 +38,8 @@ public class CategoriaMapper {
         return new CategoriaPersistence(
                 dto.id(),
                 dto.nome(),
-                dto.descricao()
+                dto.descricao(),
+                UsuarioMapper.toPersistence(dto.usuario())
         );
     }
 
@@ -43,7 +47,8 @@ public class CategoriaMapper {
         return new CategoriaDTO(
                 categoria.getId(),
                 categoria.getNome().value(),
-                categoria.getDescricao().value()
+                categoria.getDescricao().value(),
+                UsuarioMapper.toDTO(categoria.getUsuario())
         );
     }
 
@@ -51,7 +56,8 @@ public class CategoriaMapper {
         return new CategoriaDTO(
                 categoria.getId(),
                 categoria.getNome(),
-                categoria.getDescricao()
+                categoria.getDescricao(),
+                UsuarioMapper.toDTO(categoria.getUsuario())
         );
     }
 }

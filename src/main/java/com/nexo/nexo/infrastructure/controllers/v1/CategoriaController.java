@@ -2,12 +2,9 @@ package com.nexo.nexo.infrastructure.controllers.v1;
 
 import com.nexo.nexo.domain.entities.categoria.Categoria;
 import com.nexo.nexo.domain.gateway.CategoriaGateway;
-import com.nexo.nexo.domain.implementations.categoria.CreateCategoria;
 import com.nexo.nexo.domain.useCases.categoria.CreateCategoriaUseCase;
 import com.nexo.nexo.domain.useCases.categoria.FindAllCategoriaUseCase;
 import com.nexo.nexo.domain.useCases.categoria.FindByIdCategoriaUseCase;
-import com.nexo.nexo.domain.useCases.usuario.FindAllUsuarioUseCase;
-import com.nexo.nexo.domain.useCases.usuario.FindByIdUsuarioUseCase;
 import com.nexo.nexo.infrastructure.DTOs.CategoriaDTO;
 import com.nexo.nexo.infrastructure.mappers.CategoriaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,14 +12,13 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Categorias", description = "Endpoints para gerenciar categorias")
+@Tag(name = "Categoria V1", description = "Endpoints para gerenciar categorias")
 @RestController
 @RequestMapping("api/v1/categorias")
 public class CategoriaController {

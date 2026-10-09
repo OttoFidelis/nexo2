@@ -8,4 +8,6 @@ public interface CategoriaGateway {
     public Categoria save(Categoria categoria);
     public Categoria findById(Long id);
     public List<Categoria> findAll();
+    public void delete(Long id);
+    public Categoria update(Long id, Categoria categoria);
 }

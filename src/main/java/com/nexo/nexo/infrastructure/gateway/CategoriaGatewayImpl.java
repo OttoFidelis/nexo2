@@ -7,7 +7,6 @@ import com.nexo.nexo.infrastructure.persistences.CategoriaPersistence;
 import com.nexo.nexo.infrastructure.repositories.CategoriaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,5 +41,17 @@ public class CategoriaGatewayImpl implements CategoriaGateway {
                 .map(CategoriaMapper::toEntity)
                 .toList();
 
+    }
+
+    @Override
+    public void delete(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public Categoria update(Long id, Categoria categoria) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }

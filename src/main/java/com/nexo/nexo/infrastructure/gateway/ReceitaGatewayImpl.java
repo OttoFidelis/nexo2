@@ -5,7 +5,6 @@ import com.nexo.nexo.domain.entities.transacao.Transacao;
 import com.nexo.nexo.domain.gateway.TransacaoGateway;
 import com.nexo.nexo.infrastructure.mappers.ReceitaMapper;
 import com.nexo.nexo.infrastructure.persistences.ReceitaPersistence;
-import com.nexo.nexo.infrastructure.repositories.CategoriaRepository;
 import com.nexo.nexo.infrastructure.repositories.ReceitaRepository;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +41,30 @@ public class ReceitaGatewayImpl implements TransacaoGateway {
         return persistences.stream()
                 .map(ReceitaMapper::toEntity)
                 .toList();
+    }
+
+    @Override
+    public List<Transacao> findAllByUsuarioId(Long id) {
+        List<ReceitaPersistence> persistences = receitaRepository.findAllByCategoriaUsuarioId(id);
+        return persistences.stream()
+                .map(ReceitaMapper::toEntity)
+                .toList();
+    }
+
+    @Override
+    public void delete(Long id) {
+        receitaRepository.deleteById(id);
+    }
+
+    @Override
+    public Transacao update(Long id, Transacao transacao) {
+        ReceitaPersistence persistence = receitaRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Receita não encontrada")
+        );
+        persistence.setDescricao(transacao.getDescricao().value());
+        persistence.setValor(transacao.getValor().value());
+        persistence.setData(transacao.getData());
+        ReceitaPersistence updated = receitaRepository.save(persistence);
+        return ReceitaMapper.toEntity(updated);
     }
 }

@@ -11,11 +11,15 @@ public record CategoriaDTO(
         String nome,
 
         @Schema(description = "Descrição da categoria", example = "Despesas relacionadas à alimentação")
-        String descricao
+        String descricao,
+
+        @Schema(description = "Usuário associado à categoria", example = "{\"id\": 1, \"nome\": \"João\", \"email\": \"joão@gmail.com\", \"senha\": \"joão123\"}")
+        UsuarioDTO usuario
 ) {
-    public CategoriaDTO(Long id, String nome, String descricao) {
+    public CategoriaDTO(Long id, String nome, String descricao, UsuarioDTO usuario) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+        this.usuario = usuario;
     }
 }

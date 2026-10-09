@@ -1,6 +1,5 @@
 package com.nexo.nexo.infrastructure.DTOs;
 
-import com.nexo.nexo.infrastructure.persistences.CategoriaPersistence;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;

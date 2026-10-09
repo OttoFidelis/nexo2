@@ -1,16 +1,19 @@
 package com.nexo.nexo.domain.entities.categoria;
 
+import com.nexo.nexo.domain.entities.usuario.Usuario;
 import com.nexo.nexo.domain.entities.valueObjects.Descricao;
 
 public class Categoria {
     private Long id;
     private Nome nome;
     private Descricao descricao;
+    private Usuario usuario;
 
-    public Categoria(Long id, Nome nome, Descricao descricao) {
+    public Categoria(Long id, Nome nome, Descricao descricao, Usuario usuario) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -35,5 +38,12 @@ public class Categoria {
 
     public void setDescricao(Descricao descricao) {
         this.descricao = descricao;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

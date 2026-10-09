@@ -16,4 +16,8 @@ public class CategoriaPersistence {
     private Long id;
     private String nome;
     private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private UsuarioPersistence usuario;
 }
