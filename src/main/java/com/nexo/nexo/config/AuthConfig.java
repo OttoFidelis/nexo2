@@ -1,8 +1,6 @@
 package com.nexo.nexo.config;
 
-import com.nexo.nexo.infrastructure.persistences.UsuarioPersistence;
 import com.nexo.nexo.infrastructure.repositories.UsuarioRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
