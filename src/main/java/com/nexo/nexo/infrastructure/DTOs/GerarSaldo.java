@@ -12,8 +12,8 @@ public class GerarSaldo {
 
     public static BigDecimal gerarSaldo(Long id) {
         BigDecimal saldoTotal = BigDecimal.ZERO;
-        saldoTotal = saldoTotal.add(receitaRepository.sumByUsuarioId(id));
-        saldoTotal = saldoTotal.subtract(despesaRepository.sumByUsuarioId(id));
+        saldoTotal = saldoTotal.add(receitaRepository.findTotalByUsuarioId(id));
+        saldoTotal = saldoTotal.subtract(despesaRepository.findTotalByUsuarioId(id));
         return saldoTotal;
     }
 }

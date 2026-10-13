@@ -13,5 +13,5 @@ public interface ReceitaRepository extends JpaRepository<ReceitaPersistence, Lon
         FROM ReceitaPersistence r
         WHERE r.categoria.usuario.id = :usuarioId
     """)
-    BigDecimal sumByUsuarioId(Long usuarioId);
+    BigDecimal findTotalByUsuarioId(Long usuarioId);
 }

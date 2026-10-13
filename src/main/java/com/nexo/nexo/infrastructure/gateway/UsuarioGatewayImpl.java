@@ -54,14 +54,17 @@ public class UsuarioGatewayImpl implements UsuarioGateway {
     }
 
     @Override
-    public Usuario login(String email, String senha) {
+    public String login(String email, String senha) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, senha);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         Usuario usuario = (Usuario) authentication.getPrincipal();
         if (usuario != null) {
             String token = tokenConfig.generateToken(usuario);
+            return token;
         }
-        return usuario;
+        else {
+            throw new IllegalArgumentException("Credenciais inválidas");
+        }
     }
 
     @Override

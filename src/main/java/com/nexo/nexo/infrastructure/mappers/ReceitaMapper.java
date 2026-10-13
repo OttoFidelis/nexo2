@@ -69,4 +69,5 @@ public class ReceitaMapper {
                 CategoriaMapper.toDTO(transacao.getCategoria())
         );
     }
+
 }

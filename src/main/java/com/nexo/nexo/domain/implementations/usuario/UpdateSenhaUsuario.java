@@ -3,7 +3,9 @@ package com.nexo.nexo.domain.implementations.usuario;
 import com.nexo.nexo.domain.entities.usuario.Usuario;
 import com.nexo.nexo.domain.gateway.UsuarioGateway;
 import com.nexo.nexo.domain.useCases.usuario.UpdateSenhaUsuarioUseCase;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UpdateSenhaUsuario implements UpdateSenhaUsuarioUseCase {
     private final UsuarioGateway usuarioGateway;
 

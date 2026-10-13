@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,13 +29,13 @@ public class UsuarioPersistence implements UserDetails {
     }
 
     @Override
-    public @Nullable String getPassword() {
-        return "";
+    public String getPassword() {
+        return senha;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
     @Override

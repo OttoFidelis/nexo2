@@ -9,7 +9,7 @@ public interface UsuarioGateway {
     public Usuario save(Usuario usuario);
     public List<Usuario> findAll();
     public Usuario findByEmail(String email);
-    public Usuario login(String email, String senha);
+    public String login(String email, String senha);
     public Usuario updateSenha(Long id, String senha);
     public void delete(Long id);
 }

@@ -4,27 +4,19 @@ import com.nexo.nexo.domain.entities.usuario.Email;
 import com.nexo.nexo.domain.entities.usuario.NomeUsuario;
 import com.nexo.nexo.domain.entities.usuario.Senha;
 import com.nexo.nexo.domain.entities.usuario.Usuario;
+import com.nexo.nexo.infrastructure.DTOs.GerarSaldo;
 import com.nexo.nexo.infrastructure.DTOs.UsuarioDTO;
 import com.nexo.nexo.infrastructure.DTOs.UsuarioDTOResponse;
 import com.nexo.nexo.infrastructure.persistences.UsuarioPersistence;
 
 public class UsuarioMapper {
+
     public static Usuario toEntity(UsuarioPersistence persistence) {
         Usuario usuario = new Usuario(
                 persistence.getId(),
                 new NomeUsuario(persistence.getNome()),
                 new Email(persistence.getEmail()),
                 new Senha(persistence.getSenha())
-        );
-        return usuario;
-    }
-
-    public static Usuario toEntity(UsuarioDTOResponse dto) {
-        Usuario usuario = new Usuario(
-                dto.id(),
-                new NomeUsuario(dto.nome()),
-                new Email(dto.email()),
-                new Senha(dto.senha())
         );
         return usuario;
     }
@@ -79,13 +71,13 @@ public class UsuarioMapper {
         return usuarioDTO;
     }
 
-    public static UsuarioDTOResponse toDTOResponse(Usuario  usuario) {
+    public static UsuarioDTOResponse toDTOResponse(Usuario  usuario, String token) {
         UsuarioDTOResponse usuarioDTOResponse = new UsuarioDTOResponse(
                 usuario.getId(),
                 usuario.getNome().value(),
                 usuario.getEmail().value(),
-                usuario.getSenha().value(),
-                null
+                GerarSaldo.gerarSaldo(usuario.getId()),
+                token
         );
         return usuarioDTOResponse;
     }

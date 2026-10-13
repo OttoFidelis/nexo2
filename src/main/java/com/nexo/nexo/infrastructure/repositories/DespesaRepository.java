@@ -13,5 +13,5 @@ public interface DespesaRepository extends JpaRepository<DespesaPersistence, Lon
         FROM DespesaPersistence d
         WHERE d.categoria.usuario.id = :usuarioId
     """)
-    BigDecimal sumByUsuarioId(Long usuarioId);
+    BigDecimal findTotalByUsuarioId(Long usuarioId);
 }

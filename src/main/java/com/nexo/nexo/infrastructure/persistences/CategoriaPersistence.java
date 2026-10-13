@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "categoria")
 @Data
-@AllArgsConstructor
+@AllArgsConstructor 
 @NoArgsConstructor
 public class CategoriaPersistence {
     @Id

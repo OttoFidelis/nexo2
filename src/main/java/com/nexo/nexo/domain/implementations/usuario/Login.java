@@ -1,9 +1,10 @@
 package com.nexo.nexo.domain.implementations.usuario;
 
-import com.nexo.nexo.domain.entities.usuario.Usuario;
 import com.nexo.nexo.domain.gateway.UsuarioGateway;
 import com.nexo.nexo.domain.useCases.usuario.LoginUsuarioUseCase;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Login implements LoginUsuarioUseCase {
     private final UsuarioGateway usuarioGateway;
 
@@ -13,7 +14,7 @@ public class Login implements LoginUsuarioUseCase {
 
 
     @Override
-    public Usuario login(String email, String senha) {
+    public String login(String email, String senha) {
         return usuarioGateway.login(email, senha);
     }
 }
