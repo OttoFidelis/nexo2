@@ -9,6 +9,7 @@ public class GerarSaldo {
 
     private static ReceitaRepository receitaRepository;
     private static DespesaRepository despesaRepository;
+    
 
     public static BigDecimal gerarSaldo(Long id) {
         BigDecimal saldoTotal = BigDecimal.ZERO;

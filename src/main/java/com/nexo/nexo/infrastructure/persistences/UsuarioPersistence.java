@@ -1,7 +1,6 @@
 package com.nexo.nexo.infrastructure.persistences;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "usuario")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioPersistence implements UserDetails {
     @Id
@@ -57,4 +55,12 @@ public class UsuarioPersistence implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public UsuarioPersistence(Long id, String nome, String email, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+
 }

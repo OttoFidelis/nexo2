@@ -1,7 +1,6 @@
 package com.nexo.nexo.infrastructure.persistences;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "despesa")
 @Data
-@AllArgsConstructor 
 @NoArgsConstructor
 public class DespesaPersistence {
     @Id
@@ -23,4 +21,14 @@ public class DespesaPersistence {
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private CategoriaPersistence categoria;
+    public DespesaPersistence(Long id, String descricao, BigDecimal valor, LocalDate data,
+            CategoriaPersistence categoria) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
+        this.categoria = categoria;
+    }
+
+    
 }

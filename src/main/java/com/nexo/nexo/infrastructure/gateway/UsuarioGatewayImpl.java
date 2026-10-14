@@ -6,6 +6,8 @@ import com.nexo.nexo.domain.entities.usuario.Usuario;
 import com.nexo.nexo.domain.gateway.UsuarioGateway;
 import com.nexo.nexo.infrastructure.mappers.UsuarioMapper;
 import com.nexo.nexo.infrastructure.repositories.UsuarioRepository;
+import com.nexo.nexo.infrastructure.security.AuthenticatedUserResolver;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,6 +30,14 @@ public class UsuarioGatewayImpl implements UsuarioGateway {
         this.tokenConfig = tokenConfig;
     }
 
+
+    public void resolveUsuario(Usuario usuario) {
+        Long authenticatedUserId = AuthenticatedUserResolver.resolveAuthenticatedUserId(usuarioRepository);
+        if (!authenticatedUserId.equals(usuario.getId())) {
+            throw new IllegalArgumentException("Usuário não autorizado para acessar este recurso");
+        }
+    }
+
     @Override
     public Usuario findById(Long id) {
         return UsuarioMapper.toEntity(usuarioRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado")));
@@ -35,6 +45,10 @@ public class UsuarioGatewayImpl implements UsuarioGateway {
 
     @Override
     public Usuario save(Usuario usuario) {
+        if (usuario.getId() != null && usuario.getId() <= 0) {
+            usuario.setId(null);
+        }
+
         String senhaDigitada = usuario.getSenha().value();
         String senhaCriptografada = passwordEncoder.encode(senhaDigitada);
         usuario.setSenha(new Senha(senhaCriptografada));
@@ -77,6 +91,7 @@ public class UsuarioGatewayImpl implements UsuarioGateway {
 
     @Override
     public void delete(Long id) {
+        resolveUsuario(findById(id));
         usuarioRepository.deleteById(id);
     }
 }

@@ -81,7 +81,7 @@
         }
       }
     },
-    "/api/v1/usuario/delete": {
+    "/api/v1/usuario/delete/{id}": {
       "post": {
         "tags": [
           "Usuario V1"
@@ -89,17 +89,17 @@
         "summary": "Excluir usuário",
         "description": "Exclui um usuário com base no ID fornecido",
         "operationId": "deleteUsuario",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "integer",
-                "format": "int64"
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "204": {
             "description": "Usuário excluído com sucesso"
@@ -116,6 +116,58 @@
             "bearerAuth": []
           }
         ]
+      }
+    },
+    "/api/v1/usuario/create": {
+      "post": {
+        "tags": [
+          "Usuario V1"
+        ],
+        "summary": "Criar usuário",
+        "description": "Cria um novo usuário com base nas informações fornecidas",
+        "operationId": "createUsuario",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/receita/save": {
@@ -167,7 +219,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/despesa/save": {
@@ -219,7 +276,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/categorias/save": {
@@ -271,7 +333,317 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/usuario/updateSenha/{id}": {
+      "patch": {
+        "tags": [
+          "Usuario V1"
+        ],
+        "summary": "Atualizar senha do usuário",
+        "description": "Atualiza a senha de um usuário específico",
+        "operationId": "updateSenha",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "novaSenha",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Senha atualizada com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/receita/update/{id}": {
+      "patch": {
+        "tags": [
+          "Receita V1"
+        ],
+        "summary": "Atualizar receita",
+        "description": "Atualiza uma receita específica com base no ID fornecido",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id usado para encontrar a Receita",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceitaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Receita não encontrada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceitaDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceitaDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Receita atualizada com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceitaDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/despesa/update/{id}": {
+      "patch": {
+        "tags": [
+          "Despesa V1"
+        ],
+        "summary": "Atualizar despesa",
+        "description": "Atualiza uma despesa específica com base no ID fornecido",
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id usado para encontrar a Despesa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DespesaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Despesa atualizada com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DespesaDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Despesa não encontrada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DespesaDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DespesaDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/usuario/findById/{id}": {
+      "get": {
+        "tags": [
+          "Usuario V1"
+        ],
+        "summary": "Buscar usuário por ID",
+        "description": "Busca um usuário específico com base no ID fornecido",
+        "operationId": "findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Usuário encontrado com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTOResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/usuario/findAll": {
+      "get": {
+        "tags": [
+          "Usuario V1"
+        ],
+        "summary": "Listar todos os usuários",
+        "description": "Lista todos os usuários cadastrados",
+        "operationId": "findAll",
+        "responses": {
+          "200": {
+            "description": "Usuários encontrados com sucesso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTOResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTOResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/receita/findById/{id}": {
@@ -281,7 +653,7 @@
         ],
         "summary": "Buscar receita por ID",
         "description": "Retorna uma receita específica com base no ID fornecido",
-        "operationId": "findById",
+        "operationId": "findById_1",
         "parameters": [
           {
             "name": "id",
@@ -325,7 +697,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/receita/findAll": {
@@ -335,7 +712,7 @@
         ],
         "summary": "Listar todas as receitas",
         "description": "Retorna uma lista de todas as receitas cadastradas",
-        "operationId": "findAll",
+        "operationId": "findAll_1",
         "responses": {
           "500": {
             "description": "Erro interno do servidor",
@@ -363,7 +740,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/despesa/findById/{id}": {
@@ -373,7 +755,7 @@
         ],
         "summary": "Buscar despesa por ID",
         "description": "Retorna uma despesa específica com base no ID fornecido",
-        "operationId": "findById_1",
+        "operationId": "findById_2",
         "parameters": [
           {
             "name": "id",
@@ -417,7 +799,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/despesa/findAll": {
@@ -427,7 +814,7 @@
         ],
         "summary": "Listar todas as despesas",
         "description": "Retorna uma lista de todas as despesas cadastradas",
-        "operationId": "findAll_1",
+        "operationId": "findAll_2",
         "responses": {
           "200": {
             "description": "Lista de despesas retornada com sucesso",
@@ -455,7 +842,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/categorias/findById": {
@@ -465,7 +857,7 @@
         ],
         "summary": "Buscar categoria por ID",
         "description": "Retorna uma categoria específica com base no ID fornecido",
-        "operationId": "findById_2",
+        "operationId": "findById_3",
         "parameters": [
           {
             "name": "id",
@@ -509,7 +901,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/categorias/findAll": {
@@ -519,7 +916,7 @@
         ],
         "summary": "Listar todas as categorias",
         "description": "Retorna uma lista de todas as categorias cadastradas",
-        "operationId": "findAll_2",
+        "operationId": "findAll_3",
         "responses": {
           "500": {
             "description": "Erro interno do servidor",
@@ -547,7 +944,88 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/receita/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Receita V1"
+        ],
+        "summary": "Excluir receita",
+        "description": "Exclui uma receita específica com base no ID fornecido",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id usado para encontrar a Receita",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Receita excluída com sucesso"
+          },
+          "404": {
+            "description": "Receita não encontrada"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/despesa/delete/{id}": {
+      "delete": {
+        "tags": [
+          "Despesa V1"
+        ],
+        "summary": "Excluir despesa",
+        "description": "Exclui uma despesa específica com base no ID fornecido",
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id usado para encontrar a Despesa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Despesa excluída com sucesso"
+          },
+          "404": {
+            "description": "Despesa não encontrada"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -585,6 +1063,48 @@
           }
         }
       },
+      "Email": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "NomeUsuario": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "Senha": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nome": {
+            "$ref": "#/components/schemas/NomeUsuario"
+          },
+          "email": {
+            "$ref": "#/components/schemas/Email"
+          },
+          "senha": {
+            "$ref": "#/components/schemas/Senha"
+          }
+        }
+      },
       "CategoriaDTO": {
         "type": "object",
         "properties": {
@@ -605,14 +1125,19 @@
             "example": "Despesas relacionadas à alimentação"
           },
           "usuario": {
-            "$ref": "#/components/schemas/UsuarioDTO"
+            "$ref": "#/components/schemas/UsuarioResumoDTO"
           }
         },
         "description": "Dados da Categoria a ser criada",
         "example": {
           "id": 1,
           "nome": "Vendas",
-          "descricao": "Receitas relacionadas a vendas de produtos"
+          "descricao": "Receitas relacionadas a vendas de produtos",
+          "usuario": {
+            "id": 1,
+            "nome": "João",
+            "email": "joao@gmail.com"
+          }
         }
       },
       "ReceitaDTO": {
@@ -644,31 +1169,33 @@
             "$ref": "#/components/schemas/CategoriaDTO"
           }
         },
-        "description": "Objeto ReceitaDTO contendo os dados da receita a ser criada"
+        "description": "Objeto ReceitaDTO contendo os dados da receita a ser atualizada"
       },
-      "UsuarioDTO": {
+      "UsuarioResumoDTO": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int64"
+            "description": "ID do usuário",
+            "format": "int64",
+            "example": 12
           },
           "nome": {
-            "type": "string"
+            "type": "string",
+            "description": "Nome do usuário",
+            "example": "Maria"
           },
           "email": {
-            "type": "string"
-          },
-          "senha": {
-            "type": "string"
+            "type": "string",
+            "description": "Email do usuário",
+            "example": "maria@example.com"
           }
         },
-        "description": "Usuário associado à categoria",
+        "description": "DTO resumido do usuário para respostas aninhadas",
         "example": {
           "id": 1,
           "nome": "João",
-          "email": "joão@gmail.com",
-          "senha": "joão123"
+          "email": "joão@gmail.com"
         }
       },
       "DespesaDTO": {
@@ -700,7 +1227,7 @@
             "$ref": "#/components/schemas/CategoriaDTO"
           }
         },
-        "description": "Objeto DespesaDTO contendo os dados da despesa a ser criada"
+        "description": "Objeto DespesaDTO contendo os dados da despesa a ser atualizada"
       }
     },
     "securitySchemes": {

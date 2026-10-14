@@ -7,8 +7,11 @@ public class Usuario {
     private Senha senha;
     public Usuario() {
     }
+    public Usuario(Long id) {
+        this.id = normalizeId(id);
+    }
     public Usuario(Long id, NomeUsuario nome, Email email, Senha senha) {
-        this.id = id;
+        this.id = normalizeId(id);
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -17,7 +20,11 @@ public class Usuario {
         return id;
     }
     public void setId(Long id) {
-        this.id = id;
+        this.id = normalizeId(id);
+    }
+
+    private Long normalizeId(Long id) {
+        return id != null && id > 0 ? id : null;
     }
     public NomeUsuario getNome() {
         return nome;

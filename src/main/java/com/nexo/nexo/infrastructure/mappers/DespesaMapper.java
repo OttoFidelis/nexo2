@@ -1,13 +1,35 @@
 package com.nexo.nexo.infrastructure.mappers;
 
+import com.nexo.nexo.domain.entities.categoria.Categoria;
 import com.nexo.nexo.domain.entities.transacao.Tipo;
 import com.nexo.nexo.domain.entities.transacao.Transacao;
 import com.nexo.nexo.domain.entities.transacao.Valor;
+import com.nexo.nexo.domain.entities.usuario.Usuario;
 import com.nexo.nexo.domain.entities.valueObjects.Descricao;
 import com.nexo.nexo.infrastructure.DTOs.DespesaDTO;
+import com.nexo.nexo.infrastructure.persistences.CategoriaPersistence;
 import com.nexo.nexo.infrastructure.persistences.DespesaPersistence;
+import com.nexo.nexo.infrastructure.persistences.UsuarioPersistence;
 
 public class DespesaMapper {
+    private static Categoria toCategoriaReference(com.nexo.nexo.infrastructure.DTOs.CategoriaDTO categoriaDTO) {
+        if (categoriaDTO == null) {
+            throw new IllegalArgumentException("Categoria da despesa é obrigatória");
+        }
+        if (categoriaDTO.id() == null) {
+            throw new IllegalArgumentException("Categoria da despesa é obrigatória");
+        }
+        if (categoriaDTO.usuario() == null || categoriaDTO.usuario().id() == null) {
+            throw new IllegalArgumentException("Usuário da categoria é obrigatório");
+        }
+        return new Categoria(
+                categoriaDTO.id(),
+                null,
+                null,
+                new Usuario(categoriaDTO.usuario().id())
+        );
+    }
+
     public static Transacao toEntity(DespesaPersistence persistence) {
         return new Transacao(
                 persistence.getId(),
@@ -25,7 +47,7 @@ public class DespesaMapper {
                 new Descricao(dto.descricao()),
                 new Valor(dto.valor()),
                 dto.data(),
-                CategoriaMapper.toEntity(dto.categoria()),
+                toCategoriaReference(dto.categoria()),
                 Tipo.DESPESA
         );
     }
@@ -46,7 +68,12 @@ public class DespesaMapper {
                 dto.descricao(),
                 dto.valor(),
                 dto.data(),
-                CategoriaMapper.toPersistence(dto.categoria())
+            new CategoriaPersistence(
+                dto.categoria() == null ? null : dto.categoria().id(),
+                null,
+                null,
+                dto.categoria() == null || dto.categoria().usuario() == null ? null : new UsuarioPersistence(dto.categoria().usuario().id(), null, null, null)
+            )
         );
     }
 

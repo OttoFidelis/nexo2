@@ -1,14 +1,12 @@
 package com.nexo.nexo.infrastructure.persistences;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categoria")
-@Data
-@AllArgsConstructor 
+@Data 
 @NoArgsConstructor
 public class CategoriaPersistence {
     @Id
@@ -20,4 +18,13 @@ public class CategoriaPersistence {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private UsuarioPersistence usuario;
+
+    public CategoriaPersistence(Long id, String nome, String descricao, UsuarioPersistence usuario) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.usuario = usuario;
+    }
+
+    
 }

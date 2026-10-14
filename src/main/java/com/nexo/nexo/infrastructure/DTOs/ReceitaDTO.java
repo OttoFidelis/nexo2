@@ -20,7 +20,7 @@ public record ReceitaDTO(
         @Schema(description = "Data da receita", example = "2023-06-15")
         LocalDate data,
 
-        @Schema(description = "Categoria da receita", example = "{ \"id\": 1, \"nome\": \"Vendas\", \"descricao\": \"Receitas relacionadas a vendas de produtos\" }")
+        @Schema(description = "Categoria da receita", example = "{ \"id\": 1, \"nome\": \"Vendas\", \"descricao\": \"Receitas relacionadas a vendas de produtos\", \"usuario\": { \"id\": 1, \"nome\": \"João\", \"email\": \"joao@gmail.com\" } }")
         CategoriaDTO categoria) {
     public ReceitaDTO(Long id, String descricao, BigDecimal valor, LocalDate data, CategoriaDTO categoria) {
         this.id = id;

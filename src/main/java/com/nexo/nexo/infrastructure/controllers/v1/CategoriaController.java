@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
 
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("findAll")
     public ResponseEntity<List<CategoriaDTO>> findAll(){
         return new ResponseEntity<>(findAllCategoriaUseCase.execute().stream()
@@ -54,6 +56,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "404", description = "Categoria não encontrada"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("findById")
     public ResponseEntity<CategoriaDTO> findById(@RequestParam @Parameter(description = "Id usado para encontrar a Categoria") Long id){
         Categoria categoria = findByIdCategoriaUseCase.execute(id);
@@ -66,6 +69,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("save")
     public ResponseEntity<CategoriaDTO> save(@RequestBody
                                                  @Parameter(description = "Dados da Categoria a ser criada") CategoriaDTO categoriaDTO){

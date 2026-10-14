@@ -20,7 +20,7 @@ public record DespesaDTO(
         @Schema(description = "Data da despesa", example = "2023-06-15")
         LocalDate data,
 
-        @Schema(description = "Categoria da despesa", example = "{ \"id\": 1, \"nome\": \"Alimentação\", \"descricao\": \"Despesas relacionadas à alimentação\" }")
+        @Schema(description = "Categoria da despesa", example = "{ \"id\": 1, \"nome\": \"Alimentação\", \"descricao\": \"Despesas relacionadas à alimentação\", \"usuario\": { \"id\": 1, \"nome\": \"João\", \"email\": \"joao@gmail.com\" } }")
         CategoriaDTO categoria
         ) {
     public DespesaDTO(Long id, String descricao, BigDecimal valor, LocalDate data, CategoriaDTO categoria) {

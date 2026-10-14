@@ -4,81 +4,84 @@ import com.nexo.nexo.domain.entities.usuario.Email;
 import com.nexo.nexo.domain.entities.usuario.NomeUsuario;
 import com.nexo.nexo.domain.entities.usuario.Senha;
 import com.nexo.nexo.domain.entities.usuario.Usuario;
-import com.nexo.nexo.infrastructure.DTOs.GerarSaldo;
 import com.nexo.nexo.infrastructure.DTOs.UsuarioDTO;
 import com.nexo.nexo.infrastructure.DTOs.UsuarioDTOResponse;
 import com.nexo.nexo.infrastructure.persistences.UsuarioPersistence;
 
-public class UsuarioMapper {
+import java.math.BigDecimal;
 
+public class UsuarioMapper {
     public static Usuario toEntity(UsuarioPersistence persistence) {
-        Usuario usuario = new Usuario(
+        if (persistence == null) {
+            throw new IllegalArgumentException("Usuário é obrigatório");
+        }
+        return new Usuario(
                 persistence.getId(),
                 new NomeUsuario(persistence.getNome()),
                 new Email(persistence.getEmail()),
                 new Senha(persistence.getSenha())
         );
-        return usuario;
     }
 
     public static Usuario toEntity(UsuarioDTO dto) {
-        Usuario usuario = new Usuario(
+        if (dto == null) {
+            throw new IllegalArgumentException("Usuário é obrigatório");
+        }
+        return new Usuario(
                 dto.id(),
                 new NomeUsuario(dto.nome()),
                 new Email(dto.email()),
                 new Senha(dto.senha())
         );
-        return usuario;
     }
 
     public static UsuarioPersistence toPersistence(Usuario usuario) {
-        UsuarioPersistence persistence = new UsuarioPersistence(
+        return new UsuarioPersistence(
                 usuario.getId(),
                 usuario.getNome().value(),
                 usuario.getEmail().value(),
                 usuario.getSenha().value()
         );
-        return persistence;
     }
 
     public static UsuarioPersistence toPersistence(UsuarioDTO usuarioDTO) {
-        UsuarioPersistence persistence = new UsuarioPersistence(
+        return new UsuarioPersistence(
                 usuarioDTO.id(),
                 usuarioDTO.nome(),
                 usuarioDTO.email(),
                 usuarioDTO.senha()
         );
-        return persistence;
     }
 
     public static UsuarioDTO toDTO(Usuario usuario) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO(
+        return new UsuarioDTO(
                 usuario.getId(),
                 usuario.getNome().value(),
                 usuario.getEmail().value(),
                 usuario.getSenha().value()
         );
-        return usuarioDTO;
     }
 
     public static UsuarioDTO toDTO(UsuarioPersistence persistence){
-        UsuarioDTO usuarioDTO = new UsuarioDTO(
+        return new UsuarioDTO(
                 persistence.getId(),
                 persistence.getNome(),
                 persistence.getEmail(),
                 persistence.getSenha()
         );
-        return usuarioDTO;
     }
 
-    public static UsuarioDTOResponse toDTOResponse(Usuario  usuario, String token) {
-        UsuarioDTOResponse usuarioDTOResponse = new UsuarioDTOResponse(
+    public static UsuarioDTOResponse toDTOResponse(Usuario usuario, String token) {
+        return toDTOResponse(usuario, token, BigDecimal.ZERO);
+    }
+
+    public static UsuarioDTOResponse toDTOResponse(Usuario usuario, String token, BigDecimal saldo) {
+        return new UsuarioDTOResponse(
                 usuario.getId(),
                 usuario.getNome().value(),
                 usuario.getEmail().value(),
-                GerarSaldo.gerarSaldo(usuario.getId()),
+                saldo == null ? BigDecimal.ZERO : saldo,
                 token
         );
-        return usuarioDTOResponse;
     }
 }
